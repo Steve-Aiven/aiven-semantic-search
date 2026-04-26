@@ -1,0 +1,29 @@
+# --- Python virtualenv ---
+.venv/
+
+# --- Local secrets / credentials (NEVER commit) ---
+.env
+**/.env
+!**/.env.example
+application_default_credentials.json
+service-account-key.json
+*.key.json
+*.credentials.json
+
+# --- Python build/cache artifacts ---
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+.eggs/
+part-1/.venv/
+part-1/__pycache__/
+part-1/data/
+
+# --- Editor / OS metadata ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
