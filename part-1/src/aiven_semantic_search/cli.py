@@ -66,7 +66,7 @@ def cmd_create_index(settings: Settings) -> int:
     change the embedding dimension), use `reset-index --force` instead. OpenSearch
     does not allow most mapping changes on a live index.
     """
-    client = get_opensearch_client(settings.opensearch_uri, ca_certs=settings.opensearch_ca_certs)
+    client = get_opensearch_client(settings.opensearch_uri)
     mapping = build_index_mapping(settings.embed_dim)
 
     if client.indices.exists(index=settings.opensearch_index):
@@ -94,7 +94,7 @@ def cmd_reset_index(settings: Settings, *, force: bool) -> int:
     if not force:
         raise RuntimeError("Refusing to delete index without --force")
 
-    client = get_opensearch_client(settings.opensearch_uri, ca_certs=settings.opensearch_ca_certs)
+    client = get_opensearch_client(settings.opensearch_uri)
     mapping = build_index_mapping(settings.embed_dim)
 
     if client.indices.exists(index=settings.opensearch_index):
@@ -208,7 +208,7 @@ def cmd_index_catalog(
     `index-catalog` and see results. In high-throughput production indexing you
     would turn this off to avoid the per-document overhead.
     """
-    client = get_opensearch_client(settings.opensearch_uri, ca_certs=settings.opensearch_ca_certs)
+    client = get_opensearch_client(settings.opensearch_uri)
     embedder = GeminiEmbedder(
         model=settings.gemini_embed_model,
         project_id=settings.gcp_project_id,
@@ -265,7 +265,7 @@ def cmd_search(settings: Settings, *, query: str, k: int) -> int:
     not returned because they are large (3072 floats each) and not meaningful to
     a reader.
     """
-    client = get_opensearch_client(settings.opensearch_uri, ca_certs=settings.opensearch_ca_certs)
+    client = get_opensearch_client(settings.opensearch_uri)
     embedder = GeminiEmbedder(
         model=settings.gemini_embed_model,
         project_id=settings.gcp_project_id,

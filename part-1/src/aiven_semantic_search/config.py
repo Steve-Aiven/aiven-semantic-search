@@ -66,13 +66,6 @@ class Settings:
     # mapping. If they differ, indexing will fail with a dimension mismatch error.
     embed_dim: int
 
-    # Path to an Aiven project CA certificate file (PEM format).
-    # Aiven uses TLS on all connections. For OpenSearch, the service typically
-    # uses a publicly trusted CA so this field can stay empty. If your service
-    # was provisioned before Aiven switched to public CAs, download the CA
-    # certificate from the Aiven console and set this path.
-    opensearch_ca_certs: str | None
-
     @staticmethod
     def from_env() -> "Settings":
         """Build a Settings instance from environment variables."""
@@ -83,5 +76,4 @@ class Settings:
             gcp_location=os.environ.get("GCP_LOCATION", "us-central1"),
             gemini_embed_model=os.environ.get("GEMINI_EMBED_MODEL", "gemini-embedding-001"),
             embed_dim=int(os.environ.get("EMBED_DIM", "3072")),
-            opensearch_ca_certs=os.environ.get("OPENSEARCH_CA_CERTS") or None,
         )

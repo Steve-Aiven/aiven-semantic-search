@@ -20,8 +20,9 @@ Why verify TLS certificates?
 Disabling certificate verification (`verify_certs=False`) is a common shortcut
 that is easy to find in quick-start examples online. It defeats the purpose of
 TLS entirely because it allows a man-in-the-middle attacker to intercept the
-connection. All traffic to Aiven services is protected by TLS. Leave verification
-on and provide a CA bundle if needed.
+connection. All traffic to Aiven services is protected by TLS. New Aiven
+services use a publicly trusted CA, so the default trust store works without
+any extra configuration. Leave verification on.
 
 What is a k-NN index?
 -----------------------
@@ -85,7 +86,7 @@ def parse_opensearch_uri(uri: str) -> ParsedOpenSearchUri:
     )
 
 
-def get_opensearch_client(uri: str, *, ca_certs: str | None = None) -> OpenSearch:
+def get_opensearch_client(uri: str) -> OpenSearch:
     """
     Build an authenticated, TLS-verified OpenSearch client from an Aiven service URI.
 
@@ -112,9 +113,6 @@ def get_opensearch_client(uri: str, *, ca_certs: str | None = None) -> OpenSearc
         "http_compress": True,
         "timeout": 30,
     }
-
-    if ca_certs:
-        client_kwargs["ca_certs"] = ca_certs
 
     return OpenSearch(**client_kwargs)
 
